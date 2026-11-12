@@ -1,0 +1,17 @@
+*.iml
+.gradle/
+.kotlin/
+.idea/
+local.properties
+.DS_Store
+build/
+captures/
+.externalNativeBuild
+.cxx
+
+# Release signing key and its password notes: keep out of version control,
+# back up separately (see keystore/README.txt locally).
+keystore/
+*.jks
+*.keystore
+*.idsig

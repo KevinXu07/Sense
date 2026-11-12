@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- LSPosed scopes for both the RMX5010 compatibility hooks and the
+         ColorOS wallet compatibility hooks. -->
+    <string-array name="xposedscope">
+        <item>android</item>
+        <item>system</item>
+        <item>com.android.systemui</item>
+        <item>com.android.bluetooth</item>
+        <item>com.android.settings</item>
+        <item>com.oplus.camera</item>
+        <item>com.miui.securitymanager</item>
+        <item>com.miui.securitycenter</item>
+        <item>org.ifaa.aidl.manager</item>
+        <item>com.xiaomi.finddevice</item>
+        <item>com.android.nfc</item>
+        <item>com.android.se</item>
+        <item>com.finshell.wallet</item>
+        <item>com.heytap.tas</item>
+        <item>com.unionpay.tsmservice</item>
+        <item>com.oplus.eid</item>
+        <item>com.miui.tsmclient</item>
+    </string-array>
+</resources>

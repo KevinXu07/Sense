@@ -1,0 +1,75 @@
+plugins {
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.compose.compiler)
+}
+
+android {
+    namespace 'com.zephiel.sense'
+    compileSdk 37
+
+    defaultConfig {
+        applicationId 'com.zephiel.sense'
+        minSdk 26
+        targetSdk 37
+        versionCode 42
+        versionName '1.49'
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        
+        buildConfigField "String", "BUILD_TIME", "\"${new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm").format(new java.util.Date())}\""
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+    buildFeatures {
+        compose true
+        buildConfig true
+    }
+    packaging {
+        jniLibs {
+            // The LHDC bridge loads libop13_lhdc_patch.so by absolute path
+            // from ApplicationInfo.nativeLibraryDir.
+            useLegacyPackaging = true
+        }
+    }
+    compileSdkMinor 0
+}
+
+kotlin {
+    jvmToolchain(17)
+    compilerOptions {
+        freeCompilerArgs.add("-Xannotation-default-target=param-property")
+    }
+}
+
+// Fix for "task 'testClasses' not found" error in AGP 9.0+
+tasks.register("testClasses") {
+    dependsOn(tasks.matching { it.name.endsWith("UnitTestClasses") })
+}
+
+dependencies {
+    implementation libs.androidx.activity.compose
+    implementation libs.androidx.core.ktx
+    implementation platform(libs.androidx.compose.bom)
+    implementation libs.androidx.ui
+    implementation libs.androidx.ui.graphics
+    implementation libs.androidx.ui.tooling.preview
+    implementation libs.androidx.material3
+    implementation libs.androidx.material.icons.core
+    implementation libs.androidx.material.icons.extended
+    implementation libs.material
+    implementation libs.coil.compose
+    implementation libs.androidx.lifecycle.runtime.compose
+    implementation libs.androidx.lifecycle.viewmodel.compose
+    implementation libs.haze
+    compileOnly libs.xposed.api
+    debugImplementation libs.leakcanary.android
+}

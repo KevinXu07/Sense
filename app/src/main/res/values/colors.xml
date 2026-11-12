@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- M3 Light Theme Colors for Launcher Icon -->
+    <color name="launcher_background">#D6E6FF</color> <!-- Primary Container -->
+    <color name="launcher_foreground_color">#00172F</color> <!-- On Primary Container -->
+</resources>

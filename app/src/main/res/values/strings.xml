@@ -1,0 +1,207 @@
+<resources>
+    <string name="app_name">感知</string>
+
+    <!-- Section Titles -->
+    <string name="system_enhance_title">系统增强</string>
+    <string name="interaction_gestures_title">交互体验</string>
+    <string name="system_about_title">系统与关于</string>
+    <string name="module_fix_title">移植修复</string>
+
+    <!-- Fingerprint Section -->
+    <string name="enable_fp_fix">自动高亮补光</string>
+    <string name="fp_fix_summary">优化光学指纹按下时的补光亮度，提升解锁成功率</string>
+    <string name="aod_requirement_prompt">息屏补光增强需配合系统“息屏显示”使用，请确保已手动开启</string>
+    <string name="service_running_desc">后台服务正在运行</string>
+
+    <!-- FP Fix Dialog -->
+    <string name="fp_fix_dialog_title">指纹设置建议</string>
+    <string name="fp_fix_dialog_msg">为获得最佳息屏指纹体验，建议将息屏显示（AOD）设为“始终显示”。若需保持全黑，可使用空白的“个性签名”样式。</string>
+    <string name="action_dont_show_again">不再显示</string>
+    <string name="action_go_to_settings">前往配置</string>
+
+    <!-- Touch Section -->
+    <string name="touch_enhance_title">触控优化</string>
+    <string name="touch_enhance_summary">按应用切换 CPU 性能调度</string>
+    <string name="touch_daily_rate_title">日常触控采样率</string>
+    <string name="touch_report_rate_title">触控报告率</string>
+    <string name="touch_sampling_rate_title">触控采样率</string>
+    <string name="touch_game_enhance_title">游戏自动加速</string>
+    <string name="touch_game_apps_title">游戏应用列表</string>
+    <string name="touch_game_rate_title">游戏触控采样率</string>
+    <string name="touch_game_cpu_governor_title">游戏性能调度</string>
+    <string name="game_cpu_policy_title">游戏核心簇 %1$d (%2$s)</string>
+
+    <!-- Display / performance -->
+    <string name="display_refresh_rate_title">屏幕刷新率</string>
+    <string name="display_refresh_rate_120">120Hz</string>
+    <string name="display_refresh_rate_60">60Hz</string>
+    <string name="performance_profile_title">性能调度</string>
+    <string name="performance_profile_summary">CPU governor 预设；完整一加 13 场景调度需要专用内核模块</string>
+    <string name="performance_profile_powersave">省电</string>
+    <string name="performance_profile_balanced">均衡</string>
+    <string name="performance_profile_performance">性能</string>
+
+    <!-- Haptic Section -->
+    <string name="linear_vibration_title">线性马达增强</string>
+    <string name="linear_vibration_summary">实验性原生振动参数；建议与“移植修复”的触感强度二选一，避免重复叠加</string>
+    <string name="linear_vibration_restart_prompt">触感参数已更新，请重启设备以应用更改</string>
+
+    <!-- Port fixes / KSU module -->
+    <string name="module_status_title">模块状态</string>
+    <string name="haptic_strength_title">触感强度</string>
+    <string name="haptic_test_title">测试触感</string>
+    <string name="haptic_test_summary">按当前强度播放一次短振动</string>
+    <string name="ifaa_model_title">IFAA 设备型号</string>
+    <string name="wallet_swipe_test_title">测试锁屏刷卡页</string>
+    <string name="wallet_swipe_test_summary">授权钱包锁屏显示并启动 FinShell NFC 刷卡页</string>
+    <string name="module_reapply_title">重新应用模块配置</string>
+    <string name="module_reapply_summary">重新授权钱包锁屏显示并刷新模块状态</string>
+
+    <!-- Motion Gestures -->
+    <string name="lift_to_wake_title">抬起唤醒</string>
+    <string name="lift_to_wake_summary">由系统“抬起亮屏”开关控制；打开后使用系统传感器</string>
+    <string name="lift_to_wake_sensitivity_title">识别灵敏度</string>
+    <string name="lift_to_wake_sensor_delay_title">传感器刷新率</string>
+
+    <!-- Shortcut Keys -->
+    <string name="shortcut_key_title">硬件快捷方式</string>
+    <string name="enable_shortcut_key">物理按键映射</string>
+    <string name="shortcut_key_summary">自定义物理按键或侧边开关的功能</string>
+    <string name="shortcut_hw_type_title">硬件类型</string>
+    <string name="shortcut_hw_type_key">普通按键</string>
+    <string name="shortcut_hw_type_slider">三段式开关</string>
+    <string name="shortcut_click_title">单击操作</string>
+    <string name="shortcut_long_press_title">长按操作</string>
+    <string name="shortcut_long_press_timeout_title">长按判定时间</string>
+    <string name="shortcut_slider_1_title">顶部挡位操作</string>
+    <string name="shortcut_slider_2_title">中间挡位操作</string>
+    <string name="shortcut_slider_3_title">底部挡位操作</string>
+    <string name="shortcut_click_package_title">目标应用</string>
+    <string name="shortcut_package_none">未设置</string>
+
+    <string-array name="shortcut_action_entries">
+        <item>无</item>
+        <item>切换响铃模式</item>
+        <item>切换勿扰模式</item>
+        <item>打开特定应用</item>
+        <item>开关手电筒</item>
+        <item>系统截屏</item>
+        <item>微信付款码</item>
+        <item>微信扫一扫</item>
+        <item>支付宝付款码</item>
+        <item>支付宝扫一扫</item>
+    </string-array>
+
+    <string-array name="shortcut_action_values">
+        <item>none</item>
+        <item>toggle_ringer</item>
+        <item>toggle_dnd</item>
+        <item>launch_app</item>
+        <item>toggle_flashlight</item>
+        <item>screenshot</item>
+        <item>wechat_pay</item>
+        <item>wechat_scan</item>
+        <item>alipay_pay</item>
+        <item>alipay_scan</item>
+    </string-array>
+
+    <!-- Advanced Settings -->
+    <string name="debug_settings_title">高级选项</string>
+    <string name="enable_foreground_service">常驻后台服务</string>
+    <string name="enable_foreground_service_summary">保持服务持续运行，防止各项增强功能意外失效</string>
+    <string name="enable_debug_logging">调试日志</string>
+    <string name="enable_debug_logging_summary">记录详细的系统活动以辅助排查问题</string>
+
+    <!-- Personalization -->
+    <string name="personalization_title">个性化</string>
+    <string name="dynamic_color_title">动态色彩方案</string>
+    <string name="dynamic_color_summary">基于当前系统壁纸自动生成界面色彩</string>
+    <string name="theme_edit_colors">自定义强调色</string>
+    <string name="theme_accent_color">全局强调色</string>
+    <string name="theme_follow_accent">色彩同步</string>
+
+    <!-- System -->
+    <string name="other_settings_title">系统维护</string>
+    <string name="restart_service_title">重启服务</string>
+    <string name="restart_service_summary">手动重启服务以应用最新的权限与配置</string>
+    <string name="reset_defaults_title">还原所有设置</string>
+    <string name="reset_defaults_summary">将所有偏好设置还原至出厂默认状态</string>
+    <string name="reset_defaults_confirmation">确定要还原所有设置吗？该操作无法撤销。</string>
+    <string name="reset_success">设置已还原</string>
+
+    <!-- Warnings -->
+    <string name="root_not_found_title">未获得 Root 权限</string>
+    <string name="root_not_found_summary">核心功能需要 Root 权限方可生效。推荐使用 KernelSU。</string>
+    <string name="install_kernelsu">安装 KernelSU</string>
+    <string name="launch_kernelsu">启动 KernelSU</string>
+    <string name="notification_permission_title">勿扰模式访问</string>
+    <string name="notification_policy_access_required">执行快捷操作需要“勿扰模式访问权限”</string>
+    <string name="notification_permission_required">启用常驻服务需要授予通知权限</string>
+    <string name="grant_permission">立即授权</string>
+
+    <!-- About -->
+    <string name="about_title">关于感知</string>
+    <string name="about_summary">版本、开发贡献及反馈</string>
+    <string name="about_version_format">版本 %1$s</string>
+    <string name="about_build_time">构建日期</string>
+    <string name="about_developer_title">开发者</string>
+    <string name="about_developer_value">Zephiel</string>
+    <string name="about_contributors_title">贡献者</string>
+    <string name="about_contributors_value">TUSB_5834, 八月刷机, 扬帆起航航航航航, 已跑路_勿扰</string>
+    <string name="about_description">为一加设备 HyperOS 移植版定制的系统增强工具。旨在优化指纹识别、触控反馈及硬件交互，提供更原生连贯的系统体验。</string>
+    <string name="about_links_title">支持与反馈</string>
+    <string name="about_github_title">GitHub</string>
+    <string name="about_github_summary">查看源代码、参与开发或提交反馈</string>
+    <string name="about_kernelsu_title">KernelSU</string>
+    <string name="about_kernelsu_summary">访问 KernelSU 官网获取 Root 支持</string>
+    <string name="about_license_title">许可协议</string>
+    <string name="about_license_value">GPL-3.0</string>
+
+    <!-- Common Actions -->
+    <string name="action_ok">好的</string>
+    <string name="selected_count">已选择 %1$d 个应用</string>
+
+    <string name="view_debug_logs_title">查看调试日志</string>
+    <string name="view_debug_logs_summary">实时捕获系统服务动态，为故障排查与溯源提供详尽支撑</string>
+    <string name="log_viewer_title">调试日志</string>
+    <string name="action_clear_logs">清空日志</string>
+    <string name="action_copy_logs">复制全部</string>
+    <string name="logs_copied">日志已复制到剪贴板</string>
+
+    <string-array name="sensor_delay_entries">
+        <item>普通 (省电)</item>
+        <item>均衡 (流畅)</item>
+        <item>极致 (高性能)</item>
+    </string-array>
+
+    <string-array name="sensor_delay_values">
+        <item>3</item>
+        <item>2</item>
+        <item>1</item>
+    </string-array>
+
+    <string name="accessibility_service_enabled">已自动开启无障碍服务</string>
+    <string name="accessibility_service_disabled">已自动关闭无障碍服务</string>
+    <string name="accessibility_service_description">用于自动化执行系统增强功能，如模拟物理按键点击、监听应用切换以实现自动加速等。本服务无需手动开启，将随“游戏自动加速”功能自动启停。</string>
+    <string name="accessibility_service_label">感知无障碍服务</string>
+
+    <string name="notification_channel_name">感知服务</string>
+    <string name="notification_title">感知服务正在运行</string>
+    <string name="notification_content">后台增强功能已激活</string>
+
+    <!-- Toasts -->
+    <string name="toast_root_failure">未授予 Root 权限，部分功能可能无法正常工作</string>
+    <string name="display_color_mode_title">屏幕显示风格</string>
+    <string name="display_color_mode_summary">调整底层屏幕色彩模式，重启后自动应用</string>
+    <string name="display_color_mode_default">默认</string>
+    <string name="display_color_mode_vivid">鲜艳</string>
+    <string name="aod_brightness_title">息屏显示亮度</string>
+    <string name="aod_brightness_summary">降低 AOD 模式亮度以优化功耗并延长屏幕寿命</string>
+
+    <!-- CPU Governor Section -->
+    <string name="cpu_governor_title">性能调度</string>
+    <string name="cpu_governor_summary">优化处理器运行方案，平衡性能表现与续航能力</string>
+    <string name="cpu_governor_mode_title">运行模式</string>
+    <string name="cpu_policy_title">核心簇 %1$d (%2$s)</string>
+
+</resources>

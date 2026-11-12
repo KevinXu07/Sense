@@ -1,0 +1,36 @@
+[versions]
+activity = "1.13.0"
+agp = "9.1.1"
+coreKtx = "1.18.0"
+kotlin = "2.3.20"
+lifecycle = "2.10.0"
+material = "1.13.0"
+composeBom = "2026.03.01"
+material3 = "1.4.0"
+coil = "2.7.0"
+haze = "1.7.2"
+leakcanary = "2.14"
+xposed = "82"
+
+[libraries]
+androidx-lifecycle-runtime-compose = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose", version.ref = "lifecycle" }
+androidx-lifecycle-viewmodel-compose = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "lifecycle" }
+androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activity" }
+androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
+androidx-ui = { group = "androidx.compose.ui", name = "ui" }
+androidx-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
+androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
+androidx-material3 = { group = "androidx.compose.material3", name = "material3", version.ref = "material3" }
+androidx-material-icons-core = { group = "androidx.compose.material", name = "material-icons-core" }
+androidx-material-icons-extended = { group = "androidx.compose.material", name = "material-icons-extended" }
+coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+haze = { group = "dev.chrisbanes.haze", name = "haze", version.ref = "haze" }
+leakcanary-android = { group = "com.squareup.leakcanary", name = "leakcanary-android", version.ref = "leakcanary" }
+xposed-api = { group = "de.robv.android.xposed", name = "api", version.ref = "xposed" }
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "agp" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
