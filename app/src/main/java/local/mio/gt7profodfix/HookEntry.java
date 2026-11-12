@@ -126,6 +126,11 @@ public final class HookEntry implements IXposedHookLoadPackage {
                 HookLog.error("OplusCamera keep-screen-on hook installation failed", error);
             }
             try {
+                CameraOrientationHooks.install(param.classLoader);
+            } catch (Throwable error) {
+                HookLog.error("OplusCamera orientation hook installation failed", error);
+            }
+            try {
                 CameraFaceBeautyHooks.install(param.classLoader);
             } catch (Throwable error) {
                 HookLog.error("OplusCamera face-beauty guard installation failed", error);

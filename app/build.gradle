@@ -11,8 +11,8 @@ android {
         applicationId 'com.zephiel.sense'
         minSdk 26
         targetSdk 37
-        versionCode 43
-        versionName '1.50'
+        versionCode 44
+        versionName '1.51'
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         
