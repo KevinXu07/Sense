@@ -85,9 +85,11 @@ class AboutActivity : ComponentActivity() {
 @Composable
 fun AboutScreen(onBack: () -> Unit) {
     val context = LocalContext.current
-    val githubUrl = "https://github.com/Zephiel/Sense"
+    // Upstream github.com/Zephiel/Sense was deleted; this fork lives on.
+    val githubUrl = "https://github.com/KevinXu07/Sense"
     val kernelsuUrl = "https://kernelsu.org"
     val developerUrl = "https://www.coolapk.com/u/880964"
+    val maintainerUrl = "https://github.com/KevinXu07"
     val contributors = listOf(
         "TUSB_5834" to "https://www.coolapk.com/u/26870780",
         "已跑路_勿扰" to "https://www.coolapk.com/u/35139340",
@@ -266,6 +268,14 @@ fun AboutScreen(onBack: () -> Unit) {
                             stringResource(R.string.about_developer_value),
                             onClick = {
                                 context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(developerUrl)))
+                            }
+                        )
+                        InsetDivider()
+                        AboutInfoPreference(
+                            stringResource(R.string.about_maintainer_title),
+                            stringResource(R.string.about_maintainer_value),
+                            onClick = {
+                                context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(maintainerUrl)))
                             }
                         )
                         InsetDivider()
