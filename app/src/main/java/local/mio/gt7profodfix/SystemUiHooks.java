@@ -64,6 +64,11 @@ final class SystemUiHooks {
         MiChargePresentationHooks.install(loader);
         WalletHooks.install(loader);
         StatusBarHooks.install(loader);
+        try {
+            OplusAodPanelBridge.installSystemUi(loader, processName);
+        } catch (Throwable error) {
+            HookLog.error("AOD panel bridge installation failed", error);
+        }
         HookLog.info("SystemUI hooks installed in " + processName);
     }
 
