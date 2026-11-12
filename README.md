@@ -22,6 +22,8 @@ RMX5010 适配代码位于 `app/src/main/java/local/mio/gt7profodfix/`，由
 - system_server / SystemUI：屏下指纹、圆角、灵动岛、状态栏、触感等适配
 - 屏幕色彩：小米「色彩风格」桥接到 ColorOS 校准模式（`ScreenColorBridgeHooks`）
 - 查找设备：NoTZ 软件凭证委托与自动签发、cloudsp_tzid 修正（`FdNoTzHooks`）
+- 息屏与注视：全屏息屏切换面板 Longrui AOD 模式（`OplusAodPanelBridge`）；
+  小米注视感知桥接到 Oplus AON 摄像头 HAL（`XiaomiAonGazeHooks`）
 - OplusCamera 移植相关修正（慢动作、专业模式、延时摄影、多机位、相册跳转等）
 - 蓝牙 LHDC V5、小米钱包/IFAA、电池与充电信息、设置页入口等
 

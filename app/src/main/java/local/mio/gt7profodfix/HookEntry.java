@@ -48,6 +48,13 @@ public final class HookEntry implements IXposedHookLoadPackage {
             } catch (Throwable error) {
                 HookLog.error("finddevice hook installation failed", error);
             }
+        } else if ("com.xiaomi.aon".equals(param.packageName)) {
+            HookLog.info("MiAON entry, bridging gaze to Oplus AON HAL");
+            try {
+                XiaomiAonGazeHooks.install(param.classLoader);
+            } catch (Throwable error) {
+                HookLog.error("MiAON gaze hook installation failed", error);
+            }
         } else if ("com.miui.securitycenter".equals(param.packageName)
                 || "com.miui.securitymanager".equals(param.packageName)) {
             HookLog.info("SecurityCenter entry, installing MiCharge/battery-time hooks");
