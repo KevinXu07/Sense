@@ -20,5 +20,6 @@
         <item>com.unionpay.tsmservice</item>
         <item>com.oplus.eid</item>
         <item>com.miui.tsmclient</item>
+        <item>com.miui.misound</item>
     </string-array>
 </resources>
