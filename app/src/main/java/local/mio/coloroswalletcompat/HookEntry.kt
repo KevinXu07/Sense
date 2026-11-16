@@ -167,6 +167,10 @@ class HookEntry : IXposedHookLoadPackage, IXposedHookZygoteInit {
         const val MIUI_DOUBLE_CLICK_ACTION =
             "com.miui.intent.action.DOUBLE_CLICK"
         const val MIUI_EVENT_SOURCE_TYPE = "event_source_type"
+        const val ACTION_RF_FIELD_ON_DETECTED =
+            "com.android.nfc_extras.action.RF_FIELD_ON_DETECTED"
+        const val ACTION_RF_FIELD_OFF_DETECTED =
+            "com.android.nfc_extras.action.RF_FIELD_OFF_DETECTED"
         val MIUI_AUTOMATIC_NFC_EVENT_TYPES = setOf(
             "com.miui.nfc.action.RF_ON",
             "com.miui.nfc.action.TRANSACTION",
@@ -233,6 +237,7 @@ class HookEntry : IXposedHookLoadPackage, IXposedHookZygoteInit {
     override fun handleLoadPackage(lpparam: LoadPackageParam) {
         if (lpparam.packageName == "android" && lpparam.processName == "android") {
             WalletRuntimePermissions.installSystemHooks(lpparam.classLoader)
+            WalletFreezeExemption.install(lpparam.classLoader)
             return
         }
         if (lpparam.packageName == OPLUS_EID_PACKAGE) {
@@ -243,6 +248,7 @@ class HookEntry : IXposedHookLoadPackage, IXposedHookZygoteInit {
             hookOfficialColorOsRoutingDefaults(lpparam.classLoader)
             hookOffHostSecureElementResolution(lpparam.classLoader)
             hookNfcTechChooserCompat(lpparam.classLoader)
+            hookWalletFieldEvents(lpparam.classLoader)
             hookColorOsAccessCardBridge(lpparam.classLoader)
             return
         }
@@ -2557,6 +2563,153 @@ class HookEntry : IXposedHookLoadPackage, IXposedHookZygoteInit {
             "$TAG: stock NFC payment settings compatibility installed " +
                 "hooks=$installed",
         )
+    }
+
+    /**
+     * ColorOS's NfcService tells the wallet about a reader by sending
+     * RF_FIELD_ON/OFF_DETECTED, and FinShell's NfcConsumeReceiver opens the
+     * swipe page from it. HyperOS's NfcService only does that when eSE is not
+     * the default route; with eSE (SMX) it hands the event to Mi TSM instead,
+     * so FinShell never hears about a real reader.
+     *
+     * After the stock handler ran, forward the same event to FinShell only
+     * when the stock eSE branch actually accepted it (mFieldOnEventSent was
+     * set, so Mi Touch / select-card silence and provisioning are honoured),
+     * FinShell is the payment default, and the phone is not on a wireless
+     * charger (Qi pads raise an RF field; Mi TSM ignores RF_ON then too).
+     */
+    private fun hookWalletFieldEvents(classLoader: ClassLoader) {
+        runCatching {
+            val handler = XposedHelpers.findClass(
+                "com.android.nfc.NfcService\$NfcServiceHandler",
+                classLoader,
+            )
+            val feature = XposedHelpers.findClass("com.android.nfc.Feature", classLoader)
+            var forwardedOn = false
+            var lastOnLog = 0L
+
+            fun eseBranch(service: Any): Boolean {
+                val felica = XposedHelpers.callStaticMethod(
+                    feature,
+                    "isFelicaSupport",
+                ) as Boolean
+                if (felica) return false
+                val defaultSe = XposedHelpers.callMethod(
+                    service,
+                    "getDefaultSeSetting",
+                ) as Int
+                return defaultSe == XposedHelpers.getIntField(service, "ROUTE_ID_SMX")
+            }
+
+            fun send(context: Context, action: String) {
+                val intent = Intent(action).apply {
+                    setPackage(FIN_SHELL_PACKAGE)
+                    addFlags(
+                        Intent.FLAG_INCLUDE_STOPPED_PACKAGES or
+                            Intent.FLAG_RECEIVER_FOREGROUND,
+                    )
+                }
+                val currentUser = XposedHelpers.getStaticObjectField(
+                    android.os.UserHandle::class.java,
+                    "CURRENT",
+                ) as android.os.UserHandle
+                context.sendBroadcastAsUser(intent, currentUser)
+            }
+
+            XposedHelpers.findAndHookMethod(
+                handler,
+                "sendFieldOnEvent",
+                object : XC_MethodHook() {
+                    override fun beforeHookedMethod(param: MethodHookParam) {
+                        val service = XposedHelpers.getObjectField(
+                            param.thisObject,
+                            "this\$0",
+                        )
+                        param.setObjectExtra(
+                            "sentBefore",
+                            XposedHelpers.getBooleanField(service, "mFieldOnEventSent"),
+                        )
+                        XposedHelpers.setBooleanField(service, "mFieldOnEventSent", false)
+                    }
+
+                    override fun afterHookedMethod(param: MethodHookParam) {
+                        runCatching {
+                            val service = XposedHelpers.getObjectField(
+                                param.thisObject,
+                                "this\$0",
+                            )
+                            val accepted = XposedHelpers.getBooleanField(
+                                service,
+                                "mFieldOnEventSent",
+                            )
+                            if (!accepted) {
+                                XposedHelpers.setBooleanField(
+                                    service,
+                                    "mFieldOnEventSent",
+                                    param.getObjectExtra("sentBefore") as? Boolean ?: false,
+                                )
+                                return
+                            }
+                            if (!eseBranch(service)) return
+                            if (XposedHelpers.getBooleanField(service, "mInProvisionMode")) return
+                            val context = XposedHelpers.getObjectField(
+                                service,
+                                "mContext",
+                            ) as Context
+                            if (!isFinShellDefaultPayment(context)) return
+                            val battery = context.registerReceiver(
+                                null,
+                                IntentFilter(Intent.ACTION_BATTERY_CHANGED),
+                            )
+                            val plugged = battery?.getIntExtra(
+                                android.os.BatteryManager.EXTRA_PLUGGED,
+                                0,
+                            ) ?: 0
+                            if (plugged == android.os.BatteryManager.BATTERY_PLUGGED_WIRELESS) {
+                                return
+                            }
+                            send(context, ACTION_RF_FIELD_ON_DETECTED)
+                            forwardedOn = true
+                            val now = SystemClock.elapsedRealtime()
+                            if (now - lastOnLog > 2_000L) {
+                                lastOnLog = now
+                                XposedBridge.log("$TAG: reader field forwarded to FinShell")
+                            }
+                        }.onFailure {
+                            XposedBridge.log("$TAG: field-on forward failed: $it")
+                        }
+                    }
+                },
+            )
+
+            XposedHelpers.findAndHookMethod(
+                handler,
+                "sendFieldOffEvent",
+                object : XC_MethodHook() {
+                    override fun afterHookedMethod(param: MethodHookParam) {
+                        if (!forwardedOn) return
+                        forwardedOn = false
+                        runCatching {
+                            val service = XposedHelpers.getObjectField(
+                                param.thisObject,
+                                "this\$0",
+                            )
+                            val context = XposedHelpers.getObjectField(
+                                service,
+                                "mContext",
+                            ) as Context
+                            send(context, ACTION_RF_FIELD_OFF_DETECTED)
+                        }.onFailure {
+                            XposedBridge.log("$TAG: field-off forward failed: $it")
+                        }
+                    }
+                },
+            )
+            XposedBridge.log("$TAG: reader field forwarding to FinShell installed")
+        }.onFailure {
+            XposedBridge.log("$TAG: reader field forwarding unavailable")
+            XposedBridge.log(it)
+        }
     }
 
     /**
