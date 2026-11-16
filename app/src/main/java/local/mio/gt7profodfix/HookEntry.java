@@ -95,6 +95,11 @@ public final class HookEntry implements IXposedHookLoadPackage {
             } catch (Throwable error) {
                 HookLog.error("FaceEnroll hook installation failed", error);
             }
+            try {
+                DeviceParamsHooks.install(param.classLoader);
+            } catch (Throwable error) {
+                HookLog.error("DeviceParams hook installation failed", error);
+            }
         } else if ("com.android.bluetooth".equals(param.packageName)) {
             HookLog.info("Bluetooth entry, installing LHDC V5 bridge");
             try {
