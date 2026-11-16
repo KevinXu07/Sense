@@ -55,6 +55,12 @@ public final class HookEntry implements IXposedHookLoadPackage {
             } catch (Throwable error) {
                 HookLog.error("MiAON gaze hook installation failed", error);
             }
+        } else if ("com.android.phone".equals(param.packageName)) {
+            try {
+                AutoDataSwitchHooks.install(param.classLoader);
+            } catch (Throwable error) {
+                HookLog.error("AutoDataSwitch hook installation failed", error);
+            }
         } else if ("com.miui.misound".equals(param.packageName)) {
             try {
                 MiSoundHooks.install(param.classLoader);
