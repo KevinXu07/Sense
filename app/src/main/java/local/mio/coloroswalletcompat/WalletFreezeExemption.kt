@@ -54,6 +54,23 @@ internal object WalletFreezeExemption {
                     }
                 },
             )
+            // Screen-on launch mode ("LM FZ") freezes background uids without
+            // consulting the no-restrict predicate, and its timeout thaw can
+            // skip a uid, leaving the uid cgroup frozen until some later thaw.
+            // Its own allow list is rebuilt (local + cloud) and always passes
+            // through TransfermLocalAllowList, so keep the wallet in it there.
+            XposedHelpers.findAndHookMethod(
+                mode,
+                "TransfermLocalAllowList",
+                java.util.List::class.java,
+                object : XC_MethodHook() {
+                    override fun beforeHookedMethod(param: MethodHookParam) {
+                        @Suppress("UNCHECKED_CAST")
+                        val list = param.args[0] as? MutableList<Any?> ?: return
+                        EXEMPT_PACKAGES.forEach { if (it !in list) list.add(it) }
+                    }
+                },
+            )
             installed = true
             XposedBridge.log("$TAG: Greeze wallet freeze exemption installed")
         }.onFailure {
