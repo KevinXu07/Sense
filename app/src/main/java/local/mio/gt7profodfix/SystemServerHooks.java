@@ -81,10 +81,14 @@ final class SystemServerHooks {
         hookStepCounter(loader);
         hookPhoneWindowManager(loader);
         hookIfaaFingerprintAccess(loader);
-        HapticHooks.install(loader);
+        if (!ImageMerge.skip("haptics")) {
+            HapticHooks.install(loader);
+        }
         MiChargeFrameworkBridge.install(loader);
         hookGameManagerCustomMode(loader);
-        hookWalletPowerMenu(loader);
+        if (!ImageMerge.skip("wallet power key")) {
+            hookWalletPowerMenu(loader);
+        }
         HookLog.info("system_server hooks installed");
     }
 

@@ -62,7 +62,9 @@ final class SystemUiHooks {
         hookFodManager(loader);
         hookAodDoubleTapPocketGuard(loader);
         MiChargePresentationHooks.install(loader);
-        WalletHooks.install(loader);
+        if (!ImageMerge.skip("wallet gesture")) {
+            WalletHooks.install(loader);
+        }
         StatusBarHooks.install(loader);
         try {
             OplusAodPanelBridge.installSystemUi(loader, processName);

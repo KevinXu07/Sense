@@ -21,7 +21,9 @@ public final class HookEntry implements IXposedHookLoadPackage {
                 HookLog.error("corner hook installation failed", error);
             }
             try {
-                ScreenColorBridgeHooks.install(param.classLoader);
+                if (!ImageMerge.skip("screen color")) {
+                    ScreenColorBridgeHooks.install(param.classLoader);
+                }
             } catch (Throwable error) {
                 HookLog.error("screen color bridge installation failed", error);
             }
@@ -91,12 +93,16 @@ public final class HookEntry implements IXposedHookLoadPackage {
                 HookLog.error("Settings hook installation failed", error);
             }
             try {
-                FaceEnrollHooks.install(param.classLoader);
+                if (!ImageMerge.skip("face enroll")) {
+                    FaceEnrollHooks.install(param.classLoader);
+                }
             } catch (Throwable error) {
                 HookLog.error("FaceEnroll hook installation failed", error);
             }
             try {
-                DeviceParamsHooks.install(param.classLoader);
+                if (!ImageMerge.skip("device params")) {
+                    DeviceParamsHooks.install(param.classLoader);
+                }
             } catch (Throwable error) {
                 HookLog.error("DeviceParams hook installation failed", error);
             }
@@ -120,7 +126,9 @@ public final class HookEntry implements IXposedHookLoadPackage {
                 HookLog.error("OplusCamera professional-mode hook installation failed", error);
             }
             try {
-                CameraGalleryHooks.install(param.classLoader);
+                if (!ImageMerge.skip("camera gallery")) {
+                    CameraGalleryHooks.install(param.classLoader);
+                }
             } catch (Throwable error) {
                 HookLog.error("OplusCamera gallery hook installation failed", error);
             }
