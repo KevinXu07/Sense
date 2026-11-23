@@ -77,6 +77,7 @@ final class SystemServerHooks {
     }
 
     static void install(ClassLoader loader) {
+        VendorPlatformSigHooks.install(loader);
         FeatureFlagHooks.forceTrue(loader, Set.of("support_steps_provider"), "system_server");
         hookStepCounter(loader);
         hookPhoneWindowManager(loader);
